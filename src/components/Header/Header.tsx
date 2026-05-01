@@ -3,7 +3,7 @@ import Style from "./header.module.css";
 export default function Header() {
   return (
     <>
-      <header className={Style.header}>
+      <header id="header" className={Style.header}>
        <img src="./logotipo.svg" alt="" />
         <nav>
           <ul>
