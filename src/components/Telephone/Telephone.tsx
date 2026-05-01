@@ -1,3 +1,4 @@
+import { Pause, Play } from "lucide-react";
 import Style from "./telephone.module.css";
 
 export default function Telephone() {
@@ -12,12 +13,23 @@ export default function Telephone() {
           <div className={Style.content}>
             <div className={Style.topbar} />
 
-            <div>
+            <div className={Style.tela}>
               <h1>UMA HISTORIA PARA GUARDAR</h1>
-              <p>João ❤️ Manuela</p>
+              <p>ANA ❤️ LEO</p>
 
-              <div className="music">
-                <p>musica</p>
+              <div className={Style.musica}>
+                <img
+                  src="https://www.vagalume.com.br/ed-sheeran/discografia/x-letras-11.webp"
+                  alt=""
+                />
+
+                <div>
+                  <p>Clique para tocar</p>
+                  <strong>Photograph</strong>
+                  <p>Ed Sheeran</p>
+                </div>
+
+                <Play />
               </div>
 
               <img
@@ -25,8 +37,29 @@ export default function Telephone() {
                 alt=""
               />
 
-              <div className="tempo">
+              <div className={Style.tempo}>
                 <p>Juntos há</p>
+
+                <div className={Style.containerTempo}>
+                  <div>
+                    <p>04</p> <span>Anos</span>
+                  </div>
+                  <div>
+                    <p>06</p> <span>Meses</span>
+                  </div>
+                  <div>
+                    <p>06</p> <span>Meses</span>
+                  </div>
+                    <div>
+                    <p>06</p> <span>Meses</span>
+                  </div>
+                    <div>
+                    <p>06</p> <span>Meses</span>
+                  </div>
+                    <div>
+                    <p>06</p> <span>Meses</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

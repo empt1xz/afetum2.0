@@ -23,7 +23,9 @@ export default function Hero() {
           </div>
         </div>
 
-        <Telephone />
+       <div className={Style.mockup}>
+         <Telephone />
+       </div>
       </main>
     </>
   );
