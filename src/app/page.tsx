@@ -3,6 +3,7 @@ import Header from "@/components/Header/Header";
 import Hero from "@/components/Hero/Hero";
 import gsap from "gsap";
 import { useEffect } from "react";
+import Link from 'next/link'
 
 export default function Home() {
   useEffect(() => {
@@ -43,9 +44,9 @@ export default function Home() {
           opacity: 1,
           x: 0,
           duration: 1,
-          
         },
-      "-=0.5");
+        "-=0.5",
+      );
   }, []);
 
   return (

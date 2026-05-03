@@ -1,9 +1,27 @@
+"use client";
 import { Pause, Play } from "lucide-react";
 import Style from "./telephone.module.css";
+import { useState, useRef } from "react";
 
 export default function Telephone() {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [play, setPlay] = useState(false);
+  function Toggle() {
+
+    if (!audioRef.current) return;
+
+      if (play) {
+        audioRef.current.pause()
+      } else {
+        audioRef.current.play()
+      }
+
+    setPlay((e) => !e);
+  }
+
   return (
     <>
+    <audio ref={audioRef} src="/music.mp3" />
       <div className={Style.container} id="mockup">
         <div className={Style.mockup}>
           <div className={Style.buttontop}></div>
@@ -29,7 +47,7 @@ export default function Telephone() {
                   <p>Ed Sheeran</p>
                 </div>
 
-                <Play />
+                {play ? <Pause onClick={Toggle} /> : <Play onClick={Toggle} /> }
               </div>
 
               <img
@@ -50,13 +68,13 @@ export default function Telephone() {
                   <div>
                     <p>06</p> <span>Meses</span>
                   </div>
-                    <div>
+                  <div>
                     <p>06</p> <span>Meses</span>
                   </div>
-                    <div>
+                  <div>
                     <p>06</p> <span>Meses</span>
                   </div>
-                    <div>
+                  <div>
                     <p>06</p> <span>Meses</span>
                   </div>
                 </div>
