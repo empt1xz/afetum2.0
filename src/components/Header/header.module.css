@@ -3,7 +3,7 @@
 .header {
   position: fixed;
   top: 0;
-  padding: 10;
+  padding: 10px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -53,15 +53,16 @@
   transform: scaleX(1);
 }
 
-.header > button {
+.loginLink {
   background-color: #240c05;
   color: white;
   padding: 5px;
   border-radius: 30px;
   width: 150px;
   transition: 0.2s;
+  text-align: center;
 }
 
-.header > button:hover {
+.loginLink:hover {
   background-color: #6c201e;
 }
