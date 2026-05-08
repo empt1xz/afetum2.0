@@ -15,7 +15,7 @@ export default function Header() {
         </nav>
 
         <button>
-            Entrar
+            <Link href="/login">Entrar</Link>
         </button>
       </header>
     </>

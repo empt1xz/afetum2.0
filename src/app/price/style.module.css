@@ -1,0 +1,387 @@
+
+
+.container {
+  min-height: 100vh;
+  padding: 80px 20px;
+  position: relative;
+  overflow: hidden;
+
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.55)),
+    linear-gradient(to right, rgba(180, 120, 80, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(180, 120, 80, 0.08) 1px, transparent 1px);
+
+  background-size:
+    100%,
+    64px 64px,
+    64px 64px;
+  background-color: #fff8f3;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.blurOne,
+.blurTwo {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(100px);
+  z-index: 0;
+}
+
+.blurOne {
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 184, 146, 0.3);
+
+  top: 120px;
+  left: -100px;
+}
+
+.blurTwo {
+  width: 350px;
+  height: 350px;
+  background: rgba(255, 209, 179, 0.3);
+
+  bottom: 0;
+  right: -100px;
+}
+
+.hero {
+  z-index: 2;
+  text-align: center;
+  max-width: 720px;
+}
+
+.badgeTop {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 18px;
+
+  border-radius: 999px;
+
+  background: #fff;
+  border: 1px solid #f0ded3;
+
+  color: #9b6b4d;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.hero h1 {
+  margin-top: 18px;
+
+  font-size: 64px;
+  line-height: 1;
+  font-weight: 800;
+
+  color: #2d140d;
+}
+
+.hero p {
+  margin-top: 18px;
+
+  color: #8f7a70;
+
+  font-size: 22px;
+  line-height: 1.5;
+}
+
+.cards {
+  margin-top: 80px;
+
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  z-index: 2;
+}
+
+.card {
+  width: 430px;
+
+  background: rgba(255, 255, 255, 0.85);
+
+  backdrop-filter: blur(12px);
+
+  border-radius: 32px;
+
+  padding: 34px;
+
+  border: 1px solid #f2ddd0;
+
+  box-shadow:
+    0 20px 40px rgba(145, 87, 48, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+
+.disabled {
+  opacity: 0.45;
+}
+
+.activeCard {
+  border: 2px solid #efcfbf;
+
+  transform: scale(1.02);
+
+  box-shadow:
+    0 30px 60px rgba(145, 87, 48, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.badgeSoon,
+.badgePopular {
+  padding: 8px 16px;
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.badgeSoon {
+  background: #f7ede6;
+  color: #aa7b5d;
+}
+
+.badgePopular {
+  background: linear-gradient(90deg, #7a1f00, #f17a1c);
+
+  color: white;
+}
+
+.iconButton,
+.iconButtonOrange {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.iconButton {
+  background: #f7efea;
+  color: #a28779;
+}
+
+.iconButtonOrange {
+  background: #fff2e7;
+  color: #f17a1c;
+}
+
+.card h2 {
+  margin-top: 34px;
+
+  font-size: 42px;
+  line-height: 1.1;
+
+  color: #2c130d;
+}
+
+.description {
+  margin-top: 14px;
+
+  color: #876d61;
+
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.priceArea {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+
+  margin-top: 38px;
+}
+
+.currency {
+  font-size: 28px;
+  font-weight: 700;
+  color: #603324;
+  margin-bottom: 8px;
+}
+
+.priceArea strong,
+.newPriceRow strong {
+  font-size: 72px;
+  line-height: 1;
+  color: #2a0d07;
+}
+
+.send {
+  margin-bottom: 12px;
+
+  color: #9c8275;
+  font-size: 18px;
+}
+
+.features {
+  margin-top: 34px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  list-style: none;
+}
+
+.features li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  color: #5b443a;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.features li svg {
+  color: #58c27d;
+  min-width: 16px;
+}
+
+.disabledFeature {
+  opacity: 0.5;
+}
+
+.disabledFeature svg {
+  color: #c26b6b !important;
+}
+
+.pricing {
+  margin-top: 34px;
+}
+
+.oldPriceRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.oldPrice {
+  color: #9d8578;
+  text-decoration: line-through;
+  font-weight: 700;
+}
+
+.offer {
+  background: #d9f8e4;
+  color: #2baf60;
+
+  padding: 4px 10px;
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.newPriceRow {
+  margin-top: 8px;
+
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.oneTime {
+  margin-bottom: 14px;
+
+  background: #f4e6de;
+
+  padding: 8px 14px;
+  border-radius: 10px;
+
+  color: #8c5a46;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.featureBox {
+  margin-top: 34px;
+
+  border: 1px solid #efcfbf;
+
+  border-radius: 22px;
+
+  padding: 26px;
+}
+
+.button {
+  margin-top: 28px;
+
+  width: 100%;
+  height: 66px;
+
+  border: none;
+  border-radius: 18px;
+
+  background: linear-gradient(90deg, #2b0903, #4e1408);
+
+  color: white;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+@media (max-width: 980px) {
+  .hero h1 {
+    font-size: 48px;
+  }
+
+  .hero p {
+    font-size: 18px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 430px;
+  }
+
+  .priceArea strong,
+  .newPriceRow strong {
+    font-size: 54px;
+  }
+
+  .card h2 {
+    font-size: 34px;
+  }
+}
