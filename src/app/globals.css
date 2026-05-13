@@ -256,6 +256,30 @@
   font-weight: 500;
 }
 
+.contagem {
+  width: 100%;
+  max-width: 300px;
+  min-width: 150px;
+  padding: 10px;
+  color: rgb(131, 76, 76);
+  font-weight: bold;
+  text-align: center;
+  border-radius: 50px;
+  background-color: rgba(0, 0, 0, 0.171);
+  position: relative;
+}
+
+.contagem::after {
+  content: "";
+  position: absolute;
+  left: 20;
+  top: 17;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #260500a6;
+}
+
 @media (max-width: 1200px) {
   .heroContent h1 {
     font-size: 48px;

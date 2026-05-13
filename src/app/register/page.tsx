@@ -1,19 +1,18 @@
 "use client";
 import { FcGoogle } from "react-icons/fc";
-import Link from 'next/link'
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from 'next/link'
 
 const loginSchema = z.object({
   email: z.string().min(1, "Digite seu email").email("Digite um email válido"),
-
   password: z.string().min(8, "A senha deve ter no mínimo 8 caracteres"),
 });
 
 type LoginSchema = z.infer<typeof loginSchema>;
 
-export default function Login() {
+export default function Register() {
   const {
     register,
     handleSubmit,
@@ -28,7 +27,6 @@ export default function Login() {
 
   return (
     <main className="containerLogin">
-
       <section className="right">
         <form onSubmit={handleSubmit(onSubmit)} className="form">
           <div className="titleArea">
@@ -63,10 +61,22 @@ export default function Login() {
           </div>
 
           <div className="field">
+            <label>Usuario</label>
+
+            <input
+              type="text"
+              placeholder="Nome de usuario"
+              {...register("email")}
+            />
+
+            {errors.email && (
+              <span className="error">{errors.email.message}</span>
+            )}
+          </div>
+
+          <div className="field">
             <div className="passwordHeader">
               <label>SENHA</label>
-
-              <button type="button">Esqueceu?</button>
             </div>
 
             <input
@@ -81,19 +91,14 @@ export default function Login() {
           </div>
 
           <button className="submitButton" type="submit">
-            Entrar
+            Registrar
           </button>
-
-          <p className="registerText">
-            Não tem uma conta? <span><Link href="/register">Criar agora</Link></span>
-          </p>
 
           <button type="button" className="backButton">
             <Link href="/">← VOLTAR AO INÍCIO</Link>
           </button>
         </form>
       </section>
-
     </main>
   );
 }
