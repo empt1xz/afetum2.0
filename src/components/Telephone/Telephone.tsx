@@ -7,21 +7,20 @@ export default function Telephone() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [play, setPlay] = useState(false);
   function Toggle() {
-
     if (!audioRef.current) return;
 
-      if (play) {
-        audioRef.current.pause()
-      } else {
-        audioRef.current.play()
-      }
+    if (play) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
 
     setPlay((e) => !e);
   }
 
   return (
     <>
-    <audio ref={audioRef} src="/music.mp3" />
+      <audio ref={audioRef} src="/music.mp3" />
       <div className={Style.container} id="mockup">
         <div className={Style.mockup}>
           <div className={Style.buttontop}></div>
@@ -47,7 +46,7 @@ export default function Telephone() {
                   <p>Ed Sheeran</p>
                 </div>
 
-                {play ? <Pause onClick={Toggle} /> : <Play onClick={Toggle} /> }
+                {play ? <Pause onClick={Toggle} /> : <Play onClick={Toggle} />}
               </div>
 
               <img

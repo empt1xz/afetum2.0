@@ -1,11 +1,28 @@
+'use client'
 import Style from "./hero.module.css";
 import Telephone from "../Telephone/Telephone";
 import { Eye, Heart } from "lucide-react";
+import { useState } from 'react';
+
 export default function Hero() {
+
+  const [ cartas, setCartas ] = useState(0)
+
+      async function HandleCartas () {
+        const activeCartas = await fetch("/")
+      }
+
   return (
     <>
       <main className={Style.main} >
         <div className={Style.cto} id="heroLeft">
+
+            <div className="contagem">
+              <p>
+                Contagem de cartas ao vivo: {cartas}
+              </p>
+            </div>
+
           <h1>
             Não dê apenas um presente
           </h1>
