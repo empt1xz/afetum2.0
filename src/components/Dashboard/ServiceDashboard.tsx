@@ -24,13 +24,14 @@ import {
   Settings,
   Shield,
   Trash2,
-  UserRound,
   Wallet,
   X,
   Zap,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import MemoryCardPreview from "@/components/MemoryCardPreview/MemoryCardPreview";
+import { getCardTheme } from "@/lib/cardThemes";
 
 type DashboardFilter = "all" | MockMemoryStatus;
 type DashboardView = "cards" | "settings";
@@ -277,11 +278,11 @@ export default function ServiceDashboard() {
   };
 
   const handleCreateMemory = () => {
-    setActiveView("cards");
-    setActiveFilter("draft");
-    setSearchQuery("");
-    setIsMobileMenuOpen(false);
-    setMemories((current) => [createDraftMemory(current.length), ...current]);
+    router.push("/create");
+  };
+
+  const handleEditMemory = (memory: MockMemory) => {
+    router.push(`/create?memoryId=${encodeURIComponent(memory.id)}`);
   };
 
   const handleDelete = () => {
@@ -710,16 +711,20 @@ export default function ServiceDashboard() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6 animate-fade-in-up">
                   {filteredMemories.map((memory) => {
                     const palette = paletteClasses[memory.palette] || paletteClasses.rose;
+                    const cardTheme = memory.themeId ? getCardTheme(memory.themeId) : null;
                     return (
                       <article
                         key={memory.id}
                         className="group bg-white rounded-[1.5rem] overflow-hidden shadow-sm border border-[#E0BDA2]/40 hover:shadow-xl hover:-translate-y-1.5 hover:border-[#6C201E]/30 transition-all duration-500 flex flex-col"
                       >
-                        <div className={`h-44 ${palette.preview} relative p-5 flex flex-col justify-between overflow-hidden`}>
+                        <div
+                          className={`h-44 ${cardTheme ? "" : palette.preview} relative p-5 flex flex-col justify-between overflow-hidden`}
+                          style={cardTheme ? { background: cardTheme.preview } : undefined}
+                        >
                           <div className={`absolute inset-0 ${palette.overlay} group-hover:scale-110 transition-transform duration-700`} />
                           <div className="relative z-10 flex items-start justify-between gap-2">
                             <span className="px-3 py-1 bg-white/20 backdrop-blur-md rounded-lg text-[10px] font-bold text-white uppercase tracking-wider max-w-[68%] truncate">
-                              {memory.recipientType}
+                              {cardTheme?.name || memory.recipientType}
                             </span>
                             <span
                               className={`px-2.5 py-1 rounded-full border text-[10px] font-bold uppercase tracking-widest ${statusBadgeClass[memory.status]}`}
@@ -727,7 +732,10 @@ export default function ServiceDashboard() {
                               {statusLabel[memory.status]}
                             </span>
                           </div>
-                          <h3 className={`relative z-10 text-2xl font-bold leading-tight ${palette.title} line-clamp-2`}>
+                          <h3
+                            className={`relative z-10 text-2xl font-bold leading-tight ${cardTheme ? "" : palette.title} line-clamp-2`}
+                            style={cardTheme ? { color: cardTheme.text } : undefined}
+                          >
                             {memory.title}
                           </h3>
                         </div>
@@ -750,6 +758,24 @@ export default function ServiceDashboard() {
                             {memory.views} visualizacoes
                           </p>
 
+                          <div className="flex flex-wrap gap-2">
+                            {memory.productId && (
+                              <span className="rounded-full border border-[#E0BDA2]/70 bg-[#FDFBF9] px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[#6C201E]">
+                                {memory.productId === "memoria_eterna" ? "Vitalicio" : "24h"}
+                              </span>
+                            )}
+                            {memory.showNasaApod && (
+                              <span className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-blue-700">
+                                NASA
+                              </span>
+                            )}
+                            {Boolean(memory.images?.length) && (
+                              <span className="rounded-full border border-[#E0BDA2]/70 bg-[#FDFBF9] px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[#9C8276]">
+                                {memory.images?.length} foto(s)
+                              </span>
+                            )}
+                          </div>
+
                           <div className="grid grid-cols-2 gap-2 mt-auto">
                             <button
                               type="button"
@@ -760,7 +786,7 @@ export default function ServiceDashboard() {
                             </button>
                             <button
                               type="button"
-                              onClick={() => setPreviewMemory(memory)}
+                              onClick={() => handleEditMemory(memory)}
                               className="py-3 border border-[#E0BDA2] rounded-xl text-[#240C05] text-xs font-bold uppercase tracking-widest hover:bg-[#ECD5C3] transition-colors"
                             >
                               Editar
@@ -810,7 +836,7 @@ export default function ServiceDashboard() {
 
       {previewMemory && (
         <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-2 sm:p-6 animate-in fade-in">
-          <div className="w-full max-w-[460px] relative overflow-hidden rounded-[1.5rem] sm:rounded-[2.5rem] shadow-2xl ring-4 sm:ring-8 ring-white/10 bg-white">
+          <div className="w-full h-full max-w-[460px] sm:max-h-[92dvh] relative overflow-hidden rounded-[1.5rem] sm:rounded-[2.5rem] shadow-2xl ring-4 sm:ring-8 ring-white/10 bg-white">
             <button
               type="button"
               onClick={() => setPreviewMemory(null)}
@@ -818,25 +844,8 @@ export default function ServiceDashboard() {
             >
               Fechar
             </button>
-            <div className={`h-56 ${paletteClasses[previewMemory.palette]?.preview || paletteClasses.rose.preview} p-6 flex items-end`}>
-              <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-white/80 mb-2">{previewMemory.recipientType}</p>
-                <h2 className={`text-3xl font-bold ${paletteClasses[previewMemory.palette]?.title || "text-white"}`}>
-                  {previewMemory.title}
-                </h2>
-              </div>
-            </div>
-            <div className="p-6">
-              <div className="mb-5 flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-[#ECD5C3] text-[#6C201E] flex items-center justify-center">
-                  <UserRound className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-[#9C8276]">Para</p>
-                  <p className="font-bold text-[#240C05]">{previewMemory.recipientName}</p>
-                </div>
-              </div>
-              <p className="text-sm leading-6 text-[#6B4F42]">{previewMemory.message}</p>
+            <div className="absolute inset-0 overflow-y-auto no-scrollbar" data-lenis-prevent>
+              <MemoryCardPreview memory={previewMemory} />
             </div>
           </div>
         </div>

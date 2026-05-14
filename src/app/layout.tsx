@@ -20,6 +20,17 @@ const plusJakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: "Afetum",
+  icons: {
+    icon: [
+      {
+        url: "/Afavicon.png?v=3",
+        type: "image/png",
+        sizes: "512x512",
+      },
+    ],
+    shortcut: "/Afavicon.png?v=3",
+    apple: "/Afavicon.png?v=3",
+  },
 };
 
 export default function RootLayout({

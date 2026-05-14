@@ -3,8 +3,10 @@ import Style from "./hero.module.css";
 import Telephone from "../Telephone/Telephone";
 import { Eye, Heart } from "lucide-react";
 import { useState } from 'react';
+import { useRouter } from "next/navigation";
 
 export default function Hero() {
+  const router = useRouter();
 
   const [ cartas, setCartas ] = useState(0)
 
@@ -35,7 +37,7 @@ export default function Hero() {
           </p>
 
           <div className={Style.buttons}>
-            <button> <Heart /> Criar minha página</button>
+            <button type="button" onClick={() => router.push("/create")}> <Heart /> Criar minha página</button>
             <button><Eye /> Ver modelo</button>
           </div>
         </div>

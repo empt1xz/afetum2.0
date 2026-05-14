@@ -1,0 +1,568 @@
+.cardRoot {
+  min-height: 100%;
+  background: var(--card-bg);
+  color: var(--card-text);
+  padding: 54px 18px 34px;
+  display: grid;
+  gap: 28px;
+  overflow: hidden;
+}
+
+.cardRoot * {
+  font-family: inherit;
+}
+
+.hero {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 13px;
+  text-align: center;
+  padding: 10px 4px 4px;
+}
+
+.themeChip {
+  border: 1px solid color-mix(in srgb, var(--card-accent) 55%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--card-panel) 72%, transparent);
+  color: var(--card-text);
+  padding: 7px 12px;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  backdrop-filter: blur(14px);
+}
+
+.eyebrow {
+  color: var(--card-muted);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.34em;
+}
+
+.hero h1 {
+  width: min(100%, 760px);
+  color: var(--card-text);
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: clamp(42px, 11vw, 76px);
+  font-weight: 800;
+  line-height: 0.96;
+  text-wrap: balance;
+}
+
+.heroMeta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.heroMeta span {
+  min-height: 30px;
+  border: 1px solid color-mix(in srgb, var(--card-accent) 35%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--card-panel) 80%, transparent);
+  color: var(--card-text);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 11px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.gallery {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.galleryItem {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  aspect-ratio: 1;
+  background: var(--card-panel);
+  box-shadow: 0 26px 54px rgba(0, 0, 0, 0.22);
+}
+
+.galleryItem:first-child:nth-last-child(1),
+.galleryItem:first-child:nth-last-child(3),
+.galleryItem:first-child:nth-last-child(5) {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 10;
+}
+
+.galleryItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.emptyGallery {
+  width: min(100%, 520px);
+  min-height: 178px;
+  border: 1px dashed color-mix(in srgb, var(--card-accent) 42%, transparent);
+  border-radius: 24px;
+  background: color-mix(in srgb, var(--card-panel) 70%, transparent);
+  color: var(--card-muted);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  margin: 0 auto;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.musicCard,
+.messageBlock,
+.sectionBlock,
+.counterBlock {
+  width: min(100%, 640px);
+  margin: 0 auto;
+  border: 1px solid color-mix(in srgb, var(--card-accent) 35%, transparent);
+  border-radius: 26px;
+  background: color-mix(in srgb, var(--card-panel) 86%, transparent);
+  color: var(--card-panel-text);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(18px);
+}
+
+.musicCard {
+  min-height: 86px;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+}
+
+.musicCard img,
+.musicFallback {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  object-fit: cover;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--card-accent) 20%, transparent);
+}
+
+.musicCard p {
+  color: var(--card-muted);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.musicCard a {
+  color: var(--card-panel-text);
+  font-size: 19px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.messageBlock {
+  padding: 28px 24px;
+  display: grid;
+  gap: 18px;
+  text-align: center;
+}
+
+.messageBlock p {
+  color: var(--card-panel-text);
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: clamp(22px, 5vw, 30px);
+  font-style: italic;
+  line-height: 1.35;
+}
+
+.messageBlock span {
+  color: var(--card-muted);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.sectionBlock {
+  padding: 22px;
+  display: grid;
+  gap: 18px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--card-panel-text);
+}
+
+.sectionHeader h2 {
+  font-size: 23px;
+  font-weight: 900;
+}
+
+.timeline {
+  display: grid;
+  gap: 13px;
+}
+
+.timelineEvent {
+  border-left: 2px solid var(--card-accent);
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 12px;
+  padding-left: 13px;
+}
+
+.timelineEvent img {
+  width: 96px;
+  height: 96px;
+  border-radius: 18px;
+  object-fit: cover;
+}
+
+.timelineEvent span {
+  color: var(--card-muted);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.timelineEvent strong {
+  display: block;
+  color: var(--card-panel-text);
+  font-size: 17px;
+  margin-top: 4px;
+}
+
+.timelineEvent p {
+  color: color-mix(in srgb, var(--card-panel-text) 76%, transparent);
+  font-size: 13px;
+  line-height: 1.45;
+  margin-top: 5px;
+}
+
+.counterBlock {
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+}
+
+.counterBlock > img {
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  object-fit: cover;
+}
+
+.counterBlock > div {
+  padding: 24px;
+  display: grid;
+  align-content: center;
+  gap: 14px;
+}
+
+.counterBlock span {
+  color: var(--card-muted);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+}
+
+.counterBlock h2 {
+  color: var(--card-panel-text);
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.counterGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.counterGrid p {
+  min-height: 76px;
+  border: 1px solid color-mix(in srgb, var(--card-accent) 30%, transparent);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--card-panel) 74%, transparent);
+  color: var(--card-muted);
+  display: grid;
+  place-items: center;
+  gap: 4px;
+  padding: 10px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.counterGrid b {
+  color: var(--card-panel-text);
+  font-size: 28px;
+  line-height: 1;
+}
+
+.counterBlock small {
+  color: var(--card-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.nasaCard {
+  width: min(100%, 360px);
+  margin: 0 auto;
+  display: grid;
+  gap: 12px;
+}
+
+.nasaMedia {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 34px;
+  overflow: hidden;
+  background: #050505;
+  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.32);
+}
+
+.nasaMedia img,
+.nasaMedia iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+}
+
+.nasaShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.86));
+}
+
+.nasaBadge {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.42);
+  color: #fff;
+  padding: 7px 11px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.nasaText {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: #fff;
+  padding: 24px;
+  display: grid;
+  gap: 12px;
+}
+
+.nasaText h3 {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 28px;
+  line-height: 1;
+}
+
+.nasaText p {
+  max-height: 210px;
+  overflow-y: auto;
+  border-left: 2px solid var(--card-accent);
+  padding-left: 12px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.nasaText button {
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.nasaFooter {
+  color: var(--card-muted);
+  text-align: center;
+  font-size: 9px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.26em;
+}
+
+.nasaLoading {
+  min-height: 260px;
+  border-radius: 30px;
+  background: rgba(0, 0, 0, 0.18);
+  color: var(--card-muted);
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.cardFooter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--card-muted);
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.26em;
+}
+
+.cardFooter img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.cinematic {
+  font-family: var(--font-plus-jakarta), Arial, sans-serif;
+}
+
+.journal {
+  font-family: var(--font-playfair), Georgia, serif;
+}
+
+.journal .hero {
+  width: min(100%, 620px);
+  margin: 0 auto;
+  background: var(--card-panel);
+  color: var(--card-panel-text);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 18px 42px rgba(60, 39, 24, 0.16);
+  padding: 34px 26px;
+  transform: rotate(1deg);
+}
+
+.journal .gallery {
+  display: block;
+  max-width: 620px;
+}
+
+.journal .galleryItem {
+  padding: 12px 12px 44px;
+  margin: 0 auto 24px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 18px 38px rgba(65, 40, 24, 0.18);
+  transform: rotate(-1deg);
+}
+
+.journal .galleryItem:nth-child(even) {
+  transform: rotate(1.4deg);
+}
+
+.journal .galleryItem img {
+  border-radius: 4px;
+}
+
+.retro {
+  background-size: 38px 38px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.retro .hero h1,
+.retro .messageBlock p {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  text-transform: uppercase;
+  font-style: normal;
+}
+
+.retro .gallery {
+  display: flex;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 6px 18px 22px;
+  scroll-snap-type: x mandatory;
+}
+
+.retro .galleryItem {
+  width: 270px;
+  flex: 0 0 auto;
+  border: 3px solid #000;
+  border-radius: 0;
+  box-shadow: 8px 8px 0 #000;
+  scroll-snap-align: center;
+}
+
+.retro .musicCard,
+.retro .messageBlock,
+.retro .sectionBlock,
+.retro .counterBlock {
+  border-radius: 0;
+  border-width: 2px;
+}
+
+@media (max-width: 560px) {
+  .cardRoot {
+    padding: 50px 14px 30px;
+    gap: 24px;
+  }
+
+  .hero h1 {
+    font-size: 42px;
+  }
+
+  .counterBlock {
+    grid-template-columns: 1fr;
+  }
+
+  .counterBlock > img {
+    min-height: 220px;
+  }
+
+  .timelineEvent {
+    grid-template-columns: 1fr;
+  }
+
+  .timelineEvent img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+  }
+
+  .musicCard {
+    grid-template-columns: 56px minmax(0, 1fr);
+  }
+
+  .musicCard img,
+  .musicFallback {
+    width: 56px;
+    height: 56px;
+  }
+}
