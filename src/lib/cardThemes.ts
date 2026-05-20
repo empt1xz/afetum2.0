@@ -81,7 +81,8 @@ export const CARD_THEMES = {
     name: "Y2K Pop",
     description: "Vibe anos 2000",
     layout: "retro",
-    background: "linear-gradient(135deg, #ff9a9e 0%, #fad0c4 54%, #a1c4fd 100%)",
+    background:
+      "linear-gradient(135deg, #ff9a9e 0%, #fad0c4 54%, #a1c4fd 100%)",
     preview: "linear-gradient(135deg, #ff9a9e 0%, #a1c4fd 100%)",
     text: "#7a006e",
     muted: "rgba(122,0,110,.64)",
@@ -95,7 +96,8 @@ export const CARD_THEMES = {
     name: "Cinema Noir",
     description: "Dramatico P&B",
     layout: "cinematic",
-    background: "linear-gradient(180deg, #09090b 0%, #292524 58%, #111111 100%)",
+    background:
+      "linear-gradient(180deg, #09090b 0%, #292524 58%, #111111 100%)",
     preview: "linear-gradient(135deg, #050505 0%, #57534e 100%)",
     text: "#f5f5f4",
     muted: "rgba(245,245,244,.62)",
@@ -138,7 +140,8 @@ export const CARD_THEMES = {
     name: "Jardim Encantado",
     description: "Magia de primavera",
     layout: "cinematic",
-    background: "linear-gradient(180deg, #e0c3fc 0%, #c2e9fb 48%, #d4fc79 100%)",
+    background:
+      "linear-gradient(180deg, #e0c3fc 0%, #c2e9fb 48%, #d4fc79 100%)",
     preview: "linear-gradient(135deg, #e0c3fc 0%, #d4fc79 100%)",
     text: "#5d4037",
     muted: "rgba(93,64,55,.62)",
@@ -152,7 +155,8 @@ export const CARD_THEMES = {
     name: "Arraia Afetum",
     description: "Noite de Sao Joao",
     layout: "journal",
-    background: "linear-gradient(180deg, #1a237e 0%, #283593 48%, #080808 100%)",
+    background:
+      "linear-gradient(180deg, #1a237e 0%, #283593 48%, #080808 100%)",
     preview: "linear-gradient(135deg, #1a237e 0%, #ff5722 100%)",
     text: "#fff176",
     muted: "rgba(255,241,118,.68)",
@@ -166,7 +170,8 @@ export const CARD_THEMES = {
     name: "Mundo de Aventuras",
     description: "Infantil e ludico",
     layout: "cinematic",
-    background: "linear-gradient(135deg, #f8d4ff 0%, #c9f7ff 52%, #fff3b0 100%)",
+    background:
+      "linear-gradient(135deg, #f8d4ff 0%, #c9f7ff 52%, #fff3b0 100%)",
     preview: "linear-gradient(135deg, #f8d4ff 0%, #c9f7ff 100%)",
     text: "#2f265e",
     muted: "rgba(47,38,94,.62)",
@@ -220,15 +225,28 @@ export const resolveCardThemeId = (value: unknown): CardThemeId => {
   return DEFAULT_CARD_THEME_ID;
 };
 
-export const getCardTheme = (value: unknown) => CARD_THEMES[resolveCardThemeId(value)];
+export const getCardTheme = (value: unknown) =>
+  CARD_THEMES[resolveCardThemeId(value)];
 
 export const paletteByThemeId = (
   themeId: CardThemeId,
 ): "night" | "sage" | "rose" | "amber" | "teal" | "indigo" => {
   if (themeId === "zen") return "sage";
-  if (themeId === "scrapbook" || themeId === "vintage" || themeId === "easter" || themeId === "junina") return "amber";
+  if (
+    themeId === "scrapbook" ||
+    themeId === "vintage" ||
+    themeId === "easter" ||
+    themeId === "junina"
+  )
+    return "amber";
   if (themeId === "glitch") return "teal";
-  if (themeId === "aurora" || themeId === "noir" || themeId === "luxe" || themeId === "birthday") return "night";
+  if (
+    themeId === "aurora" ||
+    themeId === "noir" ||
+    themeId === "luxe" ||
+    themeId === "birthday"
+  )
+    return "night";
   if (themeId === "y2k" || themeId === "kids") return "indigo";
   return "rose";
 };

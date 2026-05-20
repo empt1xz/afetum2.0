@@ -18,10 +18,12 @@
 }
 
 .content {
-  width: min(1152px, calc(100% - 32px));
-  margin: 0 auto;
+  /* width: min(1152px, calc(100% - 32px));  ← remova */
+  /* margin: 0 auto;                          ← remova */
   padding: 34px 0 130px;
   flex: 1;
+  min-width: 0; /* ← adicione */
+  overflow-y: auto; /* ← adicione */
 }
 
 .progressRow {
@@ -43,7 +45,20 @@
   display: grid;
   place-items: center;
   cursor: pointer;
-  transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    transform 0.2s;
+}
+
+.pageLayout {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  width: min(1152px, calc(100% - 32px));
+  margin: 0 auto;
 }
 
 .backIcon:hover {
@@ -204,7 +219,10 @@
   color: #2b1410;
   text-align: left;
   cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
 }
 
 .giftCard:hover,
@@ -326,7 +344,10 @@
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background 0.2s;
 }
 
 .recipientButton span {
@@ -373,6 +394,26 @@
   color: #8a2a25;
 }
 
+.previewColumn {
+  width: 260px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  padding-top: 16px;
+}
+
+@media (max-width: 760px) {
+  .pageLayout {
+    flex-direction: column;
+  }
+
+  .previewColumn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 0 24px;
+    overflow-y: visible;
+  }
+}
 .bigInputWrap input,
 .signerField input {
   width: 100%;
@@ -554,7 +595,9 @@
   background: #f3eadf;
   padding: 3px;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
 }
 
 .toggle span {
@@ -658,7 +701,10 @@
   font-size: 12px;
   font-weight: 800;
   cursor: pointer;
-  transition: border-color 0.2s, background 0.2s, color 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    color 0.2s;
 }
 
 .stepPillActive,
@@ -745,7 +791,9 @@
   font-size: 13px;
   font-weight: 800;
   cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
 }
 
 .themeOption strong,
@@ -1024,7 +1072,10 @@
   gap: 10px;
   padding: 22px;
   cursor: pointer;
-  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    box-shadow 0.2s;
 }
 
 .planCardActive {
@@ -1238,7 +1289,10 @@
   font-size: 16px;
   font-weight: 800;
   cursor: pointer;
-  transition: border-color 0.2s, background 0.2s, color 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    color 0.2s;
 }
 
 .secondaryButton {

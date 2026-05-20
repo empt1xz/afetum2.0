@@ -46,10 +46,24 @@ import {
   type MockMemoryStatus,
   type MockTimelineEvent,
 } from "@/lib/mockSession";
+import { CardPreview } from "@/components/CardPreview/CardPreview";
 
 type GiftType = "love" | "friend";
-type CreateStep = "type" | "details" | "relationship" | "builder" | "plans" | "checkout";
-type BuilderStepId = "title" | "music" | "photos" | "timeline" | "message" | "counter-media" | "counter-text";
+type CreateStep =
+  | "type"
+  | "details"
+  | "relationship"
+  | "builder"
+  | "plans"
+  | "checkout";
+type BuilderStepId =
+  | "title"
+  | "music"
+  | "photos"
+  | "timeline"
+  | "message"
+  | "counter-media"
+  | "counter-text";
 type PaletteId = MockMemory["palette"];
 type PlanType = "lifetime" | "day";
 type PaymentMethod = "pix" | "card" | "saldo";
@@ -166,9 +180,24 @@ const planOptions: Array<{
 ];
 
 const paymentOptions = [
-  { id: "pix" as const, title: "PIX", description: "Aprovacao instantanea", icon: QrCode },
-  { id: "card" as const, title: "Cartao", description: "Credito Visa, Master ou Elo", icon: CreditCard },
-  { id: "saldo" as const, title: "Saldo", description: "Usar saldo de cartinha", icon: Badge },
+  {
+    id: "pix" as const,
+    title: "PIX",
+    description: "Aprovacao instantanea",
+    icon: QrCode,
+  },
+  {
+    id: "card" as const,
+    title: "Cartao",
+    description: "Credito Visa, Master ou Elo",
+    icon: CreditCard,
+  },
+  {
+    id: "saldo" as const,
+    title: "Saldo",
+    description: "Usar saldo de cartinha",
+    icon: Badge,
+  },
 ];
 
 const getTodayIso = () => new Date().toISOString().slice(0, 10);
@@ -184,7 +213,11 @@ const computeDuration = (date: string, time: string) => {
   const start = date ? new Date(`${date}T${time || "12:00"}:00`) : null;
   const now = new Date();
 
-  if (!start || !Number.isFinite(start.getTime()) || start.getTime() > now.getTime()) {
+  if (
+    !start ||
+    !Number.isFinite(start.getTime()) ||
+    start.getTime() > now.getTime()
+  ) {
     return { years: 0, months: 0, days: 0 };
   }
 
@@ -209,12 +242,19 @@ const computeDuration = (date: string, time: string) => {
   };
 };
 
-const buildMockMemory = (payload: CreateMemoryPayload, previous?: MockMemory): MockMemory => {
-  const plan = planOptions.find((option) => option.id === payload.plan) || planOptions[0];
+const buildMockMemory = (
+  payload: CreateMemoryPayload,
+  previous?: MockMemory,
+): MockMemory => {
+  const plan =
+    planOptions.find((option) => option.id === payload.plan) || planOptions[0];
   const title =
     payload.title.trim() ||
-    (payload.type === "love" ? "Nossa historia" : `Cartinha para ${payload.recipientName || payload.recipientType}`);
-  const recipientName = payload.recipientName.trim() || payload.recipientType || "Destinatario";
+    (payload.type === "love"
+      ? "Nossa historia"
+      : `Cartinha para ${payload.recipientName || payload.recipientType}`);
+  const recipientName =
+    payload.recipientName.trim() || payload.recipientType || "Destinatario";
   const message =
     payload.message.trim() ||
     (payload.signerName.trim()
@@ -248,7 +288,8 @@ const buildMockMemory = (payload: CreateMemoryPayload, previous?: MockMemory): M
     paymentMethod: payload.paymentMethod,
     linkExpiresAt:
       payload.status === "paid" && payload.plan === "day"
-        ? previous?.linkExpiresAt || new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+        ? previous?.linkExpiresAt ||
+          new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
         : undefined,
   };
 };
@@ -281,8 +322,10 @@ export default function CreateLetterPage() {
   const [timelineItems, setTimelineItems] = useState<MockTimelineEvent[]>([]);
   const [message, setMessage] = useState("");
   const [relationshipCounterImage, setRelationshipCounterImage] = useState("");
-  const [relationshipSectionTitle, setRelationshipSectionTitle] = useState("Sobre o casal");
-  const [relationshipSectionSubtitle, setRelationshipSectionSubtitle] = useState("Juntos desde");
+  const [relationshipSectionTitle, setRelationshipSectionTitle] =
+    useState("Sobre o casal");
+  const [relationshipSectionSubtitle, setRelationshipSectionSubtitle] =
+    useState("Juntos desde");
   const [selectedThemeId, setSelectedThemeId] = useState<CardThemeId>("aurora");
   const [selectedPlan, setSelectedPlan] = useState<PlanType>("lifetime");
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("pix");
@@ -298,14 +341,22 @@ export default function CreateLetterPage() {
       return;
     }
 
-    const loadedThemeId = memory.themeId ? resolveCardThemeId(memory.themeId) : themeIdByPalette(memory.palette);
-    const loadedPlan: PlanType = memory.plan || (memory.productId === "carta_secreta" ? "day" : "lifetime");
-    const isLoveRecipient = ["amor", "namoro", "partner"].includes(memory.recipientType.trim().toLowerCase());
+    const loadedThemeId = memory.themeId
+      ? resolveCardThemeId(memory.themeId)
+      : themeIdByPalette(memory.palette);
+    const loadedPlan: PlanType =
+      memory.plan ||
+      (memory.productId === "carta_secreta" ? "day" : "lifetime");
+    const isLoveRecipient = ["amor", "namoro", "partner"].includes(
+      memory.recipientType.trim().toLowerCase(),
+    );
 
     setEditingMemoryId(memory.id);
     setOriginalMemory(memory);
     setSelectedType(isLoveRecipient ? "love" : "friend");
-    setSelectedRecipient(isLoveRecipient ? "Mae" : memory.recipientType || "Mae");
+    setSelectedRecipient(
+      isLoveRecipient ? "Mae" : memory.recipientType || "Mae",
+    );
     setRecipientName(memory.recipientName || "");
     setSignerName(memory.senderName || "");
     setRelationshipDate(memory.relationshipDate || getTodayIso());
@@ -320,8 +371,12 @@ export default function CreateLetterPage() {
     setTimelineItems(memory.timeline || []);
     setMessage(memory.message || "");
     setRelationshipCounterImage(memory.relationshipCounterImage || "");
-    setRelationshipSectionTitle(memory.relationshipSectionTitle || "Sobre o casal");
-    setRelationshipSectionSubtitle(memory.relationshipSectionSubtitle || "Juntos desde");
+    setRelationshipSectionTitle(
+      memory.relationshipSectionTitle || "Sobre o casal",
+    );
+    setRelationshipSectionSubtitle(
+      memory.relationshipSectionSubtitle || "Juntos desde",
+    );
     setSelectedPlan(loadedPlan);
     setPaymentMethod(memory.paymentMethod || "pix");
     setTimelineDraft({
@@ -334,14 +389,26 @@ export default function CreateLetterPage() {
     setBuilderStep(0);
   }, [router]);
 
-  const selectedTypeLabel = selectedType === "love" ? "Presente de Amor" : `Presente para ${selectedRecipient}`;
-  const fieldPlaceholder = selectedType === "love" ? "Nome da pessoa amada" : `Nome de ${selectedRecipient}`;
+  const selectedTypeLabel =
+    selectedType === "love"
+      ? "Presente de Amor"
+      : `Presente para ${selectedRecipient}`;
+  const fieldPlaceholder =
+    selectedType === "love"
+      ? "Nome da pessoa amada"
+      : `Nome de ${selectedRecipient}`;
   const currentBuilderStep = builderSteps[builderStep];
-  const selectedPlanOption = planOptions.find((plan) => plan.id === selectedPlan) || planOptions[0];
-  const selectedPaymentOption = paymentOptions.find((payment) => payment.id === paymentMethod) || paymentOptions[0];
+  const selectedPlanOption =
+    planOptions.find((plan) => plan.id === selectedPlan) || planOptions[0];
+  const selectedPaymentOption =
+    paymentOptions.find((payment) => payment.id === paymentMethod) ||
+    paymentOptions[0];
   const isEditing = Boolean(editingMemoryId);
-  const canContinueDetails = recipientName.trim().length > 0 && signerName.trim().length > 0;
-  const canContinueRelationship = Boolean(relationshipDate && relationshipStartTime);
+  const canContinueDetails =
+    recipientName.trim().length > 0 && signerName.trim().length > 0;
+  const canContinueRelationship = Boolean(
+    relationshipDate && relationshipStartTime,
+  );
 
   const relationshipDuration = useMemo(
     () => computeDuration(relationshipDate, relationshipStartTime),
@@ -361,7 +428,13 @@ export default function CreateLetterPage() {
       default:
         return true;
     }
-  }, [currentBuilderStep.id, images.length, letterTitle, message, relationshipSectionTitle]);
+  }, [
+    currentBuilderStep.id,
+    images.length,
+    letterTitle,
+    message,
+    relationshipSectionTitle,
+  ]);
 
   const progressPercent = useMemo(() => {
     if (step === "type") return 8;
@@ -374,35 +447,53 @@ export default function CreateLetterPage() {
 
   const progressLabel = useMemo(() => {
     const current = selectedType === "love" ? "Amor" : selectedRecipient;
-    if (step === "builder") return `Personalizando cartinha: ${currentBuilderStep.label}`;
+    if (step === "builder")
+      return `Personalizando cartinha: ${currentBuilderStep.label}`;
     if (step === "plans") return "Escolha do plano";
-    if (step === "checkout") return `Pagamento por ${selectedPaymentOption.title}`;
-    if (step === "relationship") return `Historia do relacionamento: ${current}`;
-    return step === "details" ? `Detalhes do presente: ${current}` : `Tipo escolhido: ${current}`;
-  }, [currentBuilderStep.label, selectedPaymentOption.title, selectedRecipient, selectedType, step]);
+    if (step === "checkout")
+      return `Pagamento por ${selectedPaymentOption.title}`;
+    if (step === "relationship")
+      return `Historia do relacionamento: ${current}`;
+    return step === "details"
+      ? `Detalhes do presente: ${current}`
+      : `Tipo escolhido: ${current}`;
+  }, [
+    currentBuilderStep.label,
+    selectedPaymentOption.title,
+    selectedRecipient,
+    selectedType,
+    step,
+  ]);
 
   const guideMessage = useMemo(() => {
     if (step === "details") {
       return "Que escolha linda! Seu amor vai sentir cada detalhe dessa surpresa. Me conta, qual o nome dessa pessoa?";
     }
 
-    if (step === "relationship") return "Que lindo! Agora me diz: quando a historia comecou?";
+    if (step === "relationship")
+      return "Que lindo! Agora me diz: quando a historia comecou?";
 
     if (step === "builder") {
       const messages: Record<BuilderStepId, string> = {
-        title: "Agora vamos dar um nome para essa cartinha e escolher o clima visual dela.",
-        music: "Se tiver uma musica especial, cola aqui o link do YouTube para tocar na cartinha.",
-        photos: "Escolhe as fotos principais. Elas vao aparecer na galeria da cartinha.",
+        title:
+          "Agora vamos dar um nome para essa cartinha e escolher o clima visual dela.",
+        music:
+          "Se tiver uma musica especial, cola aqui o link do YouTube para tocar na cartinha.",
+        photos:
+          "Escolhe as fotos principais. Elas vao aparecer na galeria da cartinha.",
         timeline: "Agora marca os momentos importantes da historia de voces.",
         message: "Escreve a mensagem que vai aparecer no coracao da cartinha.",
         "counter-media": "Escolhe uma imagem para a secao de tempo juntos.",
-        "counter-text": "So falta ajustar os textos do contador antes dos planos.",
+        "counter-text":
+          "So falta ajustar os textos do contador antes dos planos.",
       };
       return messages[currentBuilderStep.id];
     }
 
-    if (step === "plans") return "Ficou lindo! Agora escolhe como essa cartinha vai ficar ativa.";
-    if (step === "checkout") return "Ultima etapa: confirma o pagamento para ativar a cartinha.";
+    if (step === "plans")
+      return "Ficou lindo! Agora escolhe como essa cartinha vai ficar ativa.";
+    if (step === "checkout")
+      return "Ultima etapa: confirma o pagamento para ativar a cartinha.";
 
     return "Que tipo de presente vamos criar?";
   }, [currentBuilderStep.id, step]);
@@ -413,16 +504,20 @@ export default function CreateLetterPage() {
     (step === "builder" && !canContinueBuilder);
 
   const continueLabel = useMemo(() => {
-    if (step === "builder" && builderStep === builderSteps.length - 1) return "Ver planos";
+    if (step === "builder" && builderStep === builderSteps.length - 1)
+      return "Ver planos";
     if (step === "plans") return "Ir para pagamento";
-    if (step === "checkout") return isEditing ? "Salvar alteracoes" : "Ativar cartinha";
+    if (step === "checkout")
+      return isEditing ? "Salvar alteracoes" : "Ativar cartinha";
     return "Continuar";
   }, [builderStep, isEditing, step]);
 
   const saveMemory = (status: MockMemoryStatus = "draft") => {
     const memories = loadMockMemories();
     const previousMemory = editingMemoryId
-      ? memories.find((memory) => memory.id === editingMemoryId) || originalMemory || undefined
+      ? memories.find((memory) => memory.id === editingMemoryId) ||
+        originalMemory ||
+        undefined
       : undefined;
     const nextMemory = buildMockMemory(
       {
@@ -453,7 +548,9 @@ export default function CreateLetterPage() {
 
     saveMockMemories(
       previousMemory
-        ? memories.map((memory) => (memory.id === previousMemory.id ? nextMemory : memory))
+        ? memories.map((memory) =>
+            memory.id === previousMemory.id ? nextMemory : memory,
+          )
         : [nextMemory, ...memories],
     );
     router.push("/dashboard");
@@ -557,13 +654,28 @@ export default function CreateLetterPage() {
     });
   };
 
+  const previewSection =
+    step === "builder"
+      ? (currentBuilderStep.id as
+          | "title"
+          | "music"
+          | "photos"
+          | "timeline"
+          | "message"
+          | "counter-media"
+          | "counter-text")
+      : undefined;
+
   const renderBuilderStepContent = () => {
     if (currentBuilderStep.id === "title") {
       return (
         <div className={styles.builderStack}>
           <div className={styles.builderTitle}>
+            
             <h2>Titulo do presente</h2>
-            <p>Use algo curto, emocional e facil de ler na abertura da cartinha.</p>
+            <p>
+              Use algo curto, emocional e facil de ler na abertura da cartinha.
+            </p>
           </div>
 
           <div className={styles.themeBox}>
@@ -598,7 +710,9 @@ export default function CreateLetterPage() {
               <input
                 type="text"
                 value={letterTitle}
-                onChange={(event) => setLetterTitle(event.target.value.slice(0, 40))}
+                onChange={(event) =>
+                  setLetterTitle(event.target.value.slice(0, 40))
+                }
                 placeholder="Ex: Eu e voce para sempre"
                 maxLength={40}
               />
@@ -607,7 +721,11 @@ export default function CreateLetterPage() {
 
           <div className={styles.suggestionRow}>
             {titleSuggestions.map((suggestion) => (
-              <button key={suggestion} type="button" onClick={() => setLetterTitle(suggestion)}>
+              <button
+                key={suggestion}
+                type="button"
+                onClick={() => setLetterTitle(suggestion)}
+              >
                 {suggestion}
               </button>
             ))}
@@ -621,7 +739,9 @@ export default function CreateLetterPage() {
         <div className={styles.builderStack}>
           <div className={styles.builderTitle}>
             <h2>Musica</h2>
-            <p>Cole um link do YouTube para deixar a cartinha com trilha sonora.</p>
+            <p>
+              Cole um link do YouTube para deixar a cartinha com trilha sonora.
+            </p>
           </div>
 
           <label className={styles.fieldGroup}>
@@ -639,7 +759,9 @@ export default function CreateLetterPage() {
 
           <div className={styles.previewNote}>
             <Music size={18} />
-            {youtubeUrl.trim() ? "Musica vinculada a cartinha." : "Voce pode pular essa etapa se preferir."}
+            {youtubeUrl.trim()
+              ? "Musica vinculada a cartinha."
+              : "Voce pode pular essa etapa se preferir."}
           </div>
         </div>
       );
@@ -675,7 +797,11 @@ export default function CreateLetterPage() {
                 <img src={image} alt={`Foto ${index + 1}`} />
                 <button
                   type="button"
-                  onClick={() => setImages((current) => current.filter((_, itemIndex) => itemIndex !== index))}
+                  onClick={() =>
+                    setImages((current) =>
+                      current.filter((_, itemIndex) => itemIndex !== index),
+                    )
+                  }
                   aria-label="Remover foto"
                 >
                   <Trash2 size={15} />
@@ -709,7 +835,12 @@ export default function CreateLetterPage() {
                 <input
                   type="date"
                   value={timelineDraft.date}
-                  onChange={(event) => setTimelineDraft((current) => ({ ...current, date: event.target.value }))}
+                  onChange={(event) =>
+                    setTimelineDraft((current) => ({
+                      ...current,
+                      date: event.target.value,
+                    }))
+                  }
                 />
               </div>
             </label>
@@ -721,7 +852,12 @@ export default function CreateLetterPage() {
                 <input
                   type="text"
                   value={timelineDraft.title}
-                  onChange={(event) => setTimelineDraft((current) => ({ ...current, title: event.target.value }))}
+                  onChange={(event) =>
+                    setTimelineDraft((current) => ({
+                      ...current,
+                      title: event.target.value,
+                    }))
+                  }
                   placeholder="Ex: Nosso primeiro encontro"
                   maxLength={60}
                 />
@@ -733,7 +869,12 @@ export default function CreateLetterPage() {
               <textarea
                 className={styles.textArea}
                 value={timelineDraft.description}
-                onChange={(event) => setTimelineDraft((current) => ({ ...current, description: event.target.value }))}
+                onChange={(event) =>
+                  setTimelineDraft((current) => ({
+                    ...current,
+                    description: event.target.value,
+                  }))
+                }
                 placeholder="Conte o que aconteceu nesse dia..."
                 rows={4}
                 maxLength={280}
@@ -747,13 +888,22 @@ export default function CreateLetterPage() {
                 <input
                   type="url"
                   value={timelineDraft.imageUrl}
-                  onChange={(event) => setTimelineDraft((current) => ({ ...current, imageUrl: event.target.value }))}
+                  onChange={(event) =>
+                    setTimelineDraft((current) => ({
+                      ...current,
+                      imageUrl: event.target.value,
+                    }))
+                  }
                   placeholder="Cole a URL da foto"
                 />
               </div>
             </label>
 
-            <button type="button" className={styles.fullButton} onClick={addTimelineItem}>
+            <button
+              type="button"
+              className={styles.fullButton}
+              onClick={addTimelineItem}
+            >
               <Plus size={18} />
               Adicionar evento
             </button>
@@ -769,7 +919,11 @@ export default function CreateLetterPage() {
                 </div>
                 <button
                   type="button"
-                  onClick={() => setTimelineItems((current) => current.filter((event) => event.id !== item.id))}
+                  onClick={() =>
+                    setTimelineItems((current) =>
+                      current.filter((event) => event.id !== item.id),
+                    )
+                  }
                   aria-label="Remover evento"
                 >
                   <Trash2 size={15} />
@@ -800,7 +954,11 @@ export default function CreateLetterPage() {
 
           <div className={styles.suggestionRow}>
             {messageSuggestions.map((suggestion) => (
-              <button key={suggestion} type="button" onClick={() => setMessage(suggestion)}>
+              <button
+                key={suggestion}
+                type="button"
+                onClick={() => setMessage(suggestion)}
+              >
                 {suggestion}
               </button>
             ))}
@@ -824,7 +982,9 @@ export default function CreateLetterPage() {
               <input
                 type="url"
                 value={relationshipCounterImage}
-                onChange={(event) => setRelationshipCounterImage(event.target.value)}
+                onChange={(event) =>
+                  setRelationshipCounterImage(event.target.value)
+                }
                 placeholder="Cole a URL da imagem"
               />
             </div>
@@ -862,7 +1022,9 @@ export default function CreateLetterPage() {
             <input
               type="text"
               value={relationshipSectionTitle}
-              onChange={(event) => setRelationshipSectionTitle(event.target.value.slice(0, 50))}
+              onChange={(event) =>
+                setRelationshipSectionTitle(event.target.value.slice(0, 50))
+              }
               placeholder="Sobre o casal"
               maxLength={50}
             />
@@ -876,7 +1038,9 @@ export default function CreateLetterPage() {
             <input
               type="text"
               value={relationshipSectionSubtitle}
-              onChange={(event) => setRelationshipSectionSubtitle(event.target.value.slice(0, 80))}
+              onChange={(event) =>
+                setRelationshipSectionSubtitle(event.target.value.slice(0, 80))
+              }
               placeholder="Juntos desde"
               maxLength={80}
             />
@@ -886,7 +1050,8 @@ export default function CreateLetterPage() {
         <div className={styles.counterTextPreview}>
           <strong>{relationshipSectionTitle || "Sobre o casal"}</strong>
           <span>
-            {relationshipSectionSubtitle || "Juntos desde"} {formatDisplayDate(relationshipDate)}
+            {relationshipSectionSubtitle || "Juntos desde"}{" "}
+            {formatDisplayDate(relationshipDate)}
           </span>
           <div>
             <p>
@@ -928,7 +1093,9 @@ export default function CreateLetterPage() {
         })}
       </div>
 
-      <section className={styles.builderPanel}>{renderBuilderStepContent()}</section>
+      <section className={styles.builderPanel}>
+        {renderBuilderStepContent()}
+      </section>
     </div>
   );
 
@@ -958,15 +1125,24 @@ export default function CreateLetterPage() {
         <h2>Duvidas frequentes</h2>
         <details>
           <summary>Qual e a diferenca entre os planos?</summary>
-          <p>O plano Para Sempre nao expira. O So Hoje libera o link por 24 horas.</p>
+          <p>
+            O plano Para Sempre nao expira. O So Hoje libera o link por 24
+            horas.
+          </p>
         </details>
         <details>
           <summary>Posso editar depois de pagar?</summary>
-          <p>Sim. A cartinha continua aparecendo no dashboard como uma memoria editavel.</p>
+          <p>
+            Sim. A cartinha continua aparecendo no dashboard como uma memoria
+            editavel.
+          </p>
         </details>
         <details>
           <summary>Como entrego o presente?</summary>
-          <p>Depois da ativacao, o dashboard guarda a cartinha para compartilhar por link.</p>
+          <p>
+            Depois da ativacao, o dashboard guarda a cartinha para compartilhar
+            por link.
+          </p>
         </details>
       </div>
     </div>
@@ -978,7 +1154,11 @@ export default function CreateLetterPage() {
     return (
       <div className={styles.checkoutShell}>
         <section className={styles.checkoutSummary}>
-          <span>{selectedPlanOption.productId === "memoria_eterna" ? "Memoria Eterna" : "Carta Secreta"}</span>
+          <span>
+            {selectedPlanOption.productId === "memoria_eterna"
+              ? "Memoria Eterna"
+              : "Carta Secreta"}
+          </span>
           <h2>{selectedPlanOption.title}</h2>
           <p>{selectedPlanOption.description}</p>
           <strong>R$ {selectedPlanOption.price}</strong>
@@ -1037,13 +1217,22 @@ export default function CreateLetterPage() {
                   className={`${styles.giftCard} ${isActive ? styles.giftCardActive : ""}`}
                   onClick={() => {
                     setSelectedType(giftType.id);
-                    setSelectedPalette(giftType.id === "love" ? "rose" : "amber");
-                    setSelectedThemeId(giftType.id === "love" ? "aurora" : "scrapbook");
+                    setSelectedPalette(
+                      giftType.id === "love" ? "rose" : "amber",
+                    );
+                    setSelectedThemeId(
+                      giftType.id === "love" ? "aurora" : "scrapbook",
+                    );
                   }}
                 >
-                  {giftType.badge && <span className={styles.cardBadge}>{giftType.badge}</span>}
+                  {giftType.badge && (
+                    <span className={styles.cardBadge}>{giftType.badge}</span>
+                  )}
                   <span className={styles.cardIcon}>
-                    <Icon size={24} fill={giftType.id === "love" ? "currentColor" : "none"} />
+                    <Icon
+                      size={24}
+                      fill={giftType.id === "love" ? "currentColor" : "none"}
+                    />
                   </span>
                   <span className={styles.cardText}>
                     <strong>{giftType.title}</strong>
@@ -1138,7 +1327,9 @@ export default function CreateLetterPage() {
                 max={getTodayIso()}
                 onChange={(event) => setRelationshipDate(event.target.value)}
               />
-              <span className={styles.displayDate}>{formatDisplayDate(relationshipDate)}</span>
+              <span className={styles.displayDate}>
+                {formatDisplayDate(relationshipDate)}
+              </span>
             </div>
           </label>
 
@@ -1149,7 +1340,9 @@ export default function CreateLetterPage() {
               <input
                 type="time"
                 value={relationshipStartTime}
-                onChange={(event) => setRelationshipStartTime(event.target.value)}
+                onChange={(event) =>
+                  setRelationshipStartTime(event.target.value)
+                }
               />
             </div>
           </label>
@@ -1171,7 +1364,8 @@ export default function CreateLetterPage() {
             <div className={styles.nasaToggleText}>
               <strong>Mostrar a foto da NASA desse dia?</strong>
               <span>
-                Exibe a Astronomy Picture of the Day da NASA para a data escolhida, com a explicacao daquele dia.
+                Exibe a Astronomy Picture of the Day da NASA para a data
+                escolhida, com a explicacao daquele dia.
               </span>
             </div>
             <button
@@ -1203,8 +1397,8 @@ export default function CreateLetterPage() {
             </div>
             {showNasaApod && (
               <p>
-                <ImageIcon size={15} />
-                A cartinha buscara automaticamente a imagem da NASA de {formatDisplayDate(relationshipDate)}.
+                <ImageIcon size={15} />A cartinha buscara automaticamente a
+                imagem da NASA de {formatDisplayDate(relationshipDate)}.
               </p>
             )}
           </div>
@@ -1220,46 +1414,94 @@ export default function CreateLetterPage() {
   return (
     <main className={styles.screen}>
       <header className={styles.topbar}>
-        {isEditing ? `Editando cartinha: ${originalMemory?.title || letterTitle}` : "Presente especial em poucos minutos"}
+        {isEditing
+          ? `Editando cartinha: ${originalMemory?.title || letterTitle}`
+          : "Presente especial em poucos minutos"}
       </header>
 
-      <section className={styles.content} aria-label="Criar cartinha">
-        <div className={styles.progressRow}>
-          <button type="button" className={styles.backIcon} onClick={handleBack} aria-label="Voltar">
-            <ChevronLeft size={20} />
-          </button>
-          <div className={styles.progressTrack} aria-label={progressLabel}>
-            <span className={styles.progressFill} style={{ width: `${progressPercent}%` }} />
-          </div>
-        </div>
-
-        <div className={styles.chatRow}>
-          <div className={styles.avatarWrap}>
-            <div className={styles.avatar}>
-              <img src="/Afavicon.png?v=3" alt="Afetum" />
-              <span className={styles.typingDots} aria-hidden="true">
-                <i />
-                <i />
-                <i />
-              </span>
+      <div className={styles.pageLayout}>
+        <section className={styles.content} aria-label="Criar cartinha">
+          <div className={styles.progressRow}>
+            <button
+              type="button"
+              className={styles.backIcon}
+              onClick={handleBack}
+              aria-label="Voltar"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <div className={styles.progressTrack} aria-label={progressLabel}>
+              <span
+                className={styles.progressFill}
+                style={{ width: `${progressPercent}%` }}
+              />
             </div>
-            <span>Afetum</span>
-          </div>
-          <div className={styles.bubble}>{guideMessage}</div>
-        </div>
 
-        {renderMainContent()}
-      </section>
+            
+          </div>
+          
+
+          <div className={styles.chatRow}>
+            <div className={styles.avatarWrap}>
+              <div className={styles.avatar}>
+                <img src="/Afavicon.png?v=3" alt="Afetum" />
+                <span className={styles.typingDots} aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                </span>
+              </div>
+              <span>Afetum</span>
+            </div>
+            <div className={styles.bubble}>{guideMessage}</div>
+          </div>
+
+          {renderMainContent()}
+        </section>
+
+        {step !== "type" && (
+          <aside className={styles.previewColumn}>
+            <CardPreview
+              themeId={selectedThemeId}
+              //@ts-ignore
+              palette={selectedPalette}
+              title={letterTitle}
+              recipientName={recipientName}
+              signerName={signerName}
+              message={message}
+              images={images}
+              youtubeUrl={youtubeUrl}
+              timeline={timelineItems}
+              relationshipDate={relationshipDate}
+              relationshipStartTime={relationshipStartTime}
+              city={city}
+              relationshipSectionTitle={relationshipSectionTitle}
+              relationshipSectionSubtitle={relationshipSectionSubtitle}
+              relationshipCounterImage={relationshipCounterImage}
+              showNasaApod={showNasaApod}
+              activeSection={previewSection}
+            />
+          </aside>
+        )}
+      </div>
 
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
-          <button type="button" className={styles.secondaryButton} onClick={handleBack}>
+          <button
+            type="button"
+            className={styles.secondaryButton}
+            onClick={handleBack}
+          >
             Voltar
           </button>
           <button
             type="button"
             className={styles.secondaryButton}
-            onClick={() => saveMemory(isEditing ? originalMemory?.status || "draft" : "draft")}
+            onClick={() =>
+              saveMemory(
+                isEditing ? originalMemory?.status || "draft" : "draft",
+              )
+            }
           >
             {isEditing ? "Salvar" : "Rascunho"}
           </button>
