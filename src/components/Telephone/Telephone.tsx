@@ -32,7 +32,7 @@ export default function Telephone() {
 
             <div className={Style.tela}>
               <h1>UMA HISTORIA PARA GUARDAR</h1>
-              <p>ANA ❤️ LEO</p>
+              <p> ANA ❤️ LUAN </p>
 
               <div className={Style.musica}>
                 <img
